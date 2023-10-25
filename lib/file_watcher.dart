@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lyrics_shower/app_state.dart';
 import 'package:process_run/shell_run.dart';
@@ -36,7 +37,7 @@ getConfig() async {
     String yamlString = await configFile.readAsString();
     Map yaml = await loadYaml(yamlString);
     appState.fromYaml(yaml);
-    await Future.delayed(const Duration(milliseconds: 3500));
+    await Future.delayed(const Duration(milliseconds: 2500));
     appState.isReady.value = true;
   } catch (e) {
     if (e.toString().contains('PathNotFoundException')) {
@@ -50,4 +51,16 @@ yamlWrite(File file, dynamic json) async {
   var yaml = yamlWriter.convert(json);
   await file.writeAsString(yaml);
   return true;
+}
+
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = 'FF$hexColor';
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }

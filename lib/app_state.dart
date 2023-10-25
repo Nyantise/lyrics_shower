@@ -40,9 +40,10 @@ class AppStates extends GetxController {
   RxDouble textSize = 52.0.obs;
 
   //Color
-  Rx<String> backgroundColor = '#14061bd9'.obs;
-  Rx<String> subcolor = '#ffffff'.obs;
-  Rx<String> textColor = '#ffffff'.obs;
+  //0x14061bd9
+  Rx<int> backgroundColor = 0x14061bd9.obs;
+  Rx<int> subcolor = 0xffffffff.obs;
+  Rx<int> textColor = 0xffffffff.obs;
 
   void changeAlign(int val) async {
     if ((alignState == 0 && val == -1) || (alignState == 2 && val == 1)) {
@@ -87,6 +88,21 @@ class AppStates extends GetxController {
 
   updateConfig() async {
     await yamlWrite(configFile, appState.toJson());
+    return true;
+  }
+}
+
+isColorDark(Color myColor) {
+  int g = myColor.green;
+  int b = myColor.blue;
+  int r = myColor.red;
+
+  double grayscale = (0.299 * r) + (0.587 * g) + (0.114 * b);
+  if (grayscale > 128) {
+    // color is light
+    return false;
+  } else {
+    // color is dark
     return true;
   }
 }

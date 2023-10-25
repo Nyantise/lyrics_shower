@@ -1,6 +1,5 @@
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
-import 'package:from_css_color/from_css_color.dart';
 import 'package:get/get.dart';
 import 'package:lyrics_shower/file_watcher.dart';
 import 'package:lyrics_shower/key_binds.dart';
@@ -53,62 +52,65 @@ class _HomePageState extends State<HomePage> {
         child: Obx(
       () => Scaffold(
           backgroundColor: Colors.transparent,
-          body: Container(
-              decoration: BoxDecoration(
-                  color: appState.stayFocused.value
-                      ? fromCssColor(appState.backgroundColor.value)
-                      : Colors.transparent,
-                  border: Border.all(
-                    color: appState.hover.value
-                        ? fromCssColor(appState.subcolor.value)
+          body: Center(
+            child: AnimatedContainer(
+                duration: const Duration(milliseconds: 1400),
+                curve: Curves.elasticOut,
+                decoration: BoxDecoration(
+                    color: appState.stayFocused.value
+                        ? Color(appState.backgroundColor.value)
                         : Colors.transparent,
-                  )),
-              width: 100.w,
-              height: 100.h,
-              child: appState.isReady.value
-                  ? Stack(
-                      children: [
-                        Positioned(
-                          top: 5.h,
-                          right: 5.h,
-                          child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeIn,
-                              opacity: appState.stayFocused.value ? 1 : 0,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.edit_note_outlined,
-                                    color:
-                                        fromCssColor(appState.subcolor.value),
-                                    size: 21,
-                                  ),
-                                  Text(
-                                    ' Edit',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: fromCssColor(
-                                            appState.subcolor.value)),
-                                  ),
-                                ],
-                              )),
-                        ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 3.h,
-                              ),
-                              const LyricsText()
-                            ]),
-                      ],
-                    )
-                  : ayo)),
+                    border: Border.all(
+                      color: appState.hover.value
+                          ? Color(appState.subcolor.value)
+                          : Colors.transparent,
+                    )),
+                width: appState.isReady.isFalse ? 200 : 100.w,
+                height: appState.isReady.isFalse ? 200 : 100.h,
+                child: appState.isReady.value
+                    ? Stack(
+                        children: [
+                          Positioned(
+                            top: 5.h,
+                            right: 5.h,
+                            child: AnimatedOpacity(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeIn,
+                                opacity: appState.stayFocused.value ? 1 : 0,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.edit_note_outlined,
+                                      color: Color(appState.subcolor.value),
+                                      size: 21,
+                                    ),
+                                    Text(
+                                      ' Edit',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color:
+                                              Color(appState.subcolor.value)),
+                                    ),
+                                  ],
+                                )),
+                          ),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 3.h,
+                                ),
+                                const LyricsText()
+                              ]),
+                        ],
+                      )
+                    : hello),
+          )),
     ));
   }
 }
 
-var ayo = Center(
+var hello = Center(
   child: TextAnimator(
     'Hello!',
     initialDelay: const Duration(milliseconds: 500),
@@ -116,7 +118,6 @@ var ayo = Center(
     incomingEffect: WidgetTransitionEffects.outgoingScaleUp(
         duration: const Duration(milliseconds: 100)),
     outgoingEffect: WidgetTransitionEffects.outgoingScaleUp(),
-    style:
-        TextStyle(color: fromCssColor(appState.textColor.value), fontSize: 32),
+    style: TextStyle(color: Color(appState.textColor.value), fontSize: 32),
   ),
 );

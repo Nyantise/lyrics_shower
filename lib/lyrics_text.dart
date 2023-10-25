@@ -47,19 +47,23 @@ class _LyricsTextState extends State<LyricsText> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 3.w),
       child: SizedBox(
-        width: 100.w,
+        width: double.maxFinite,
         child: Obx(
-          () => TextAnimator(
-            hey,
-            characterDelay: const Duration(milliseconds: 8),
-            incomingEffect: WidgetTransitionEffects.outgoingScaleUp(
-                duration: const Duration(milliseconds: 100)),
-            outgoingEffect: WidgetTransitionEffects.outgoingScaleUp(),
+          () => AnimatedDefaultTextStyle(
             style: TextStyle(
               fontSize: appState.textSize.value,
               color: Colors.white,
             ),
-            textAlign: appState.textAlign.value,
+            curve: Curves.elasticOut,
+            duration: const Duration(milliseconds: 700),
+            child: TextAnimator(
+              hey,
+              characterDelay: const Duration(milliseconds: 8),
+              incomingEffect: WidgetTransitionEffects.outgoingScaleUp(
+                  duration: const Duration(milliseconds: 100)),
+              outgoingEffect: WidgetTransitionEffects.outgoingScaleUp(),
+              textAlign: appState.textAlign.value,
+            ),
           ),
         ),
       ),
